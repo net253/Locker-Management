@@ -1,2 +1,2 @@
-# Locker-Management-Back-End
-Locker-Management-Project
+# Locker-Management
+Locker-Management
