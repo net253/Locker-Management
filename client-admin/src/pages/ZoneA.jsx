@@ -1,0 +1,43 @@
+import React from "react";
+import { Container, Card, Row, Col } from "react-bootstrap";
+import GaugeInfo from "../components/piechart/GaugeInfo";
+import LayoutA from "../components/layout/LayoutA";
+import Indicator from "../components/Indicator";
+import { motion } from "framer-motion";
+
+import "../App.css";
+import NavMenu from "../components/NavMenu";
+
+import CallZoneUsed from "../components/CallZoneUsed";
+
+export default function ZoneA() {
+  const pageTransition = {
+    ease: "anticipate",
+    type: "tween",
+  };
+
+  return (
+    <>
+      <CallZoneUsed zone="a" />
+      <NavMenu />
+      <motion.div
+        initial={{ opacity: 0, y: "1%" }}
+        animate={{ opacity: 1, y: "0%" }}
+        exit={{ opacity: 0, y: "1%" }}
+        transition={pageTransition}
+      >
+        <Container fluid>
+          <Row className="b-height">
+            <GaugeInfo zoneName="Zone A" />
+            <Col xs={9} className="py-2 ps-0 ">
+              <Card body className="shadow-sm h-100 b-height">
+                <LayoutA />
+                <Indicator locker="67" all="80" />
+              </Card>
+            </Col>
+          </Row>
+        </Container>
+      </motion.div>
+    </>
+  );
+}

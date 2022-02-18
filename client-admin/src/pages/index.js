@@ -1,0 +1,9 @@
+export { default as ConfirmMove } from "./ConfirmMove";
+export { default as Locker } from "./Locker";
+export { default as Login } from "./Login";
+export { default as Record } from "./Record";
+export { default as Report } from "./Report";
+export { default as ZoneA } from "./ZoneA";
+export { default as ZoneB } from "./ZoneB";
+export { default as ZoneC } from "./ZoneC";
+export { default as ZoneD } from "./ZoneD";
