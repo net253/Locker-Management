@@ -1,0 +1,21 @@
+1. Create Dockerfile
+FROM node:14 // pull node v.14
+RUN mkdir /snc-locker // $ mkdir snc-locker
+WORKDIR /snc-locker // work directory
+COPY . /snc-locker // copy all host to docker
+RUN npm install // $ npm install
+EXPOSE 8090
+CMD [ "npm", "start" ]
+
+2. Create .dockerignore
+node_modules
+npm-debug.log
+note.txt
+
+3. $ docker build . -t <your username>/node-express
+
+
+4. $ docker run --name <container name> -p <External port>:<Internal port> -d <your username>/node-express
+
+
+5. $ docker exec -it <container id> /bin/bash OR docker exec -it <container name> /bin/bash
