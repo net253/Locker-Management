@@ -1,0 +1,53 @@
+@font-face {
+  font-family: "sarabun";
+  src: local("Sarabun"), url("./font/Sarabun-500.ttf") format("truetype");
+}
+
+* {
+  font-family: "sarabun";
+}
+
+.font-bold {
+  font-weight: 900;
+  font-style: italic;
+  font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
+.font-light {
+  font-family: sarabunLight;
+  font-size: 0.8rem;
+}
+
+body {
+  background-image: url("./components/img/backedit.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.card-size {
+  min-height: 75%;
+  max-width: 600px;
+}
+
+.min-body-height {
+  min-height: 93vh;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
