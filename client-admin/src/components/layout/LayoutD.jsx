@@ -27,23 +27,25 @@ export default function LayoutD() {
                   className={`bg-locker text-center `}
                   style={{ width: "350px" }}
                 >{`${fGroupNo(i + 1)}`}</div>
-                <div className={`${11 + i * 20 < 30 ? "" : "opacity-25"}`}>
+                <div>
                   <LockerUsed
                     zone="D"
                     num={11 + i * 20}
                     qty={10}
                     height={35}
                     used={11 + i * 20 < 30 ? true : false}
+                    // used={true}
                   />
                 </div>
               </div>
             </Col>
           ))}
 
-        {Array(2)
+        {/* Disable */}
+        {Array(4)
           .fill(0)
           .map((_, i) => (
-            <Col xs={5} className="m-2 px-5 opacity-25" key={i}>
+            <Col xs={5} className="m-2 px-5" key={i}>
               <div className="ps-2">
                 <LockerUsed
                   zone="D"

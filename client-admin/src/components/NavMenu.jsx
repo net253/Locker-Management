@@ -35,19 +35,21 @@ export default function NavMenu() {
     const search = getSearch.current.value;
     const action = "used";
     if (search) {
-      axios.post(`/api/search`, { search, action }).then(({ data }) => {
-        if (data.length === 0) {
-          Swal.fire({
-            icon: "error",
-            html: `<h2>ไม่พบข้อมูลพนักงาน</h2>`,
-            confirmButtonText: "ตกลง",
-          });
-        } else {
-          // console.log(data);
-          setListName(data);
-          handleShowModal();
-        }
-      });
+      axios
+        .post(`http://localhost:8090/api/search`, { search, action })
+        .then(({ data }) => {
+          if (data.length === 0) {
+            Swal.fire({
+              icon: "error",
+              html: `<h2>ไม่พบข้อมูลพนักงาน</h2>`,
+              confirmButtonText: "ตกลง",
+            });
+          } else {
+            // console.log(data);
+            setListName(data);
+            handleShowModal();
+          }
+        });
     } else {
       Swal.fire({
         icon: "warning",
@@ -59,20 +61,22 @@ export default function NavMenu() {
 
   const handleSelectSearch = (info) => {
     const { zone, lockerNo, channelNo } = info;
-    axios.get(`/api/locker-used/${zone}/${lockerNo}`).then(({ data }) => {
-      if (data.length > 0) {
-        getSearch.current.value = "";
-        dispatch(updateLocker(data));
-        history.push({
-          pathname: "/admin/locker",
-          state: {
-            zone,
-            lockerNo,
-            channelNo,
-          },
-        });
-      }
-    });
+    axios
+      .get(`http://localhost:8090/api/locker-used/${zone}/${lockerNo}`)
+      .then(({ data }) => {
+        if (data.length > 0) {
+          getSearch.current.value = "";
+          dispatch(updateLocker(data));
+          history.push({
+            pathname: "/admin/locker",
+            state: {
+              zone,
+              lockerNo,
+              channelNo,
+            },
+          });
+        }
+      });
   };
 
   const handleLogout = () => {

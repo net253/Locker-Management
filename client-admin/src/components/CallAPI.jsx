@@ -8,7 +8,7 @@ export default function CallAPI() {
   const dispatch = useDispatch();
 
   const getOverallData = () => {
-    axios.get("/api/overall").then(({ data }) => {
+    axios.get("http://localhost:8090/api/overall").then(({ data }) => {
       // console.log(data);
       dispatch(updateOverall(data));
     });

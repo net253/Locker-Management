@@ -7,10 +7,12 @@ import { updateUsedZone } from "../store/slices/usedZoneSlice";
 export default function CallZoneUsed({ zone }) {
   const dispatch = useDispatch();
   const getZoneUsed = () => {
-    axios.get(`/api/zone-used/${zone}`).then(({ data }) => {
-      // console.log(data);
-      dispatch(updateUsedZone(data));
-    });
+    axios
+      .get(`http://localhost:8090/api/zone-used/${zone}`)
+      .then(({ data }) => {
+        // console.log(data);
+        dispatch(updateUsedZone(data));
+      });
   };
 
   useEffect(() => {

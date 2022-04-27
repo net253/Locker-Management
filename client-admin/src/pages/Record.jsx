@@ -26,7 +26,7 @@ export default function Record() {
 
   const getHistoryData = () => {
     axios
-      .post("/api/history", { zone: "" })
+      .post("http://localhost:8090/api/history", { zone: "" })
       .then(({ data }) => dispatch(updateHistory(data)));
   };
 
@@ -59,7 +59,7 @@ export default function Record() {
               <hr />
               <TableRecord />
             </Form>
-            <div className="d-flex justify-content-end">
+            {/* <div className="d-flex justify-content-end">
               <ExcelFile
                 element={
                   <Button variant="success" className="mt-3">
@@ -92,9 +92,15 @@ export default function Record() {
                     value="datetime"
                   />
                   <ExcelColumn label="เบอร์โทรศัพท์" value="tel" />
+                  <ExcelColumn
+                    label="สถานะ"
+                    value={(status) =>
+                      status.action === "checkin" ? "Check-in" : "Check-out"
+                    }
+                  />
                 </ExcelSheet>
               </ExcelFile>
-            </div>
+            </div> */}
           </Card>
         </Container>
       </motion.div>

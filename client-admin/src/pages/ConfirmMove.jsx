@@ -27,11 +27,21 @@ export default function ConfirmMove() {
   const [channelEmpty, setChannelEmpty] = useState([]);
   const [formConfirm, setFormConfirm] = useState(initialFormConfirm);
 
+  //Check at ----------------------------------------------------------------------
+  function chkAt(position, gender) {
+    if (position === "fulltime") {
+      return gender === "male" ? "fm" : "ff";
+    } else {
+      return gender === "male" ? "cm" : "cf";
+    }
+  }
+
   // Modal Handle ------------------------------------------------------------------
   const handleShow = (info) => {
-    const { zoneNew } = info;
+    console.log(info);
+    const { zoneNew, position, gender } = info;
     setShow(true);
-    getLockerEmpty(zoneNew);
+    getLockerEmpty(zoneNew, position, gender);
     setFormConfirm({ ...formConfirm, ...info });
   };
 
@@ -41,21 +51,29 @@ export default function ConfirmMove() {
   };
 
   // Fetch API ------------------------------------------------------------------
-  const getLockerEmpty = (zone) => {
-    axios.get(`/api/zone-used/${zone}`).then(({ data }) => {
-      setLockerEmpty(
-        data
-          ?.filter(({ status }) => status !== "full")
-          ?.map(({ lockerNo }) => lockerNo)
-      );
-    });
+  const getLockerEmpty = (zone, position, gender) => {
+    axios
+      .get(`http://localhost:8090/api/zone-used/${zone}`)
+      .then(({ data }) => {
+        // console.log(data);
+        setLockerEmpty(
+          data
+            ?.filter(
+              ({ status, attribute }) =>
+                status !== "full" && attribute == chkAt(position, gender)
+            )
+            ?.map(({ lockerNo }) => lockerNo)
+        );
+      });
   };
 
   const getRequestData = (search = "") => {
-    axios.post(`/api/request`, { search }).then(({ data }) => {
-      setRequestData(data);
-      // console.log(data);
-    });
+    axios
+      .post(`http://localhost:8090/api/request`, { search })
+      .then(({ data }) => {
+        setRequestData(data);
+        // console.log(data);
+      });
   };
 
   const handleCancel = (code) => {
@@ -70,7 +88,7 @@ export default function ConfirmMove() {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .post("/api-user/register-delete", {
+          .post("http://localhost:8090/api-user/register-delete", {
             code,
           })
           .then(({ data }) => {
@@ -85,13 +103,15 @@ export default function ConfirmMove() {
     const { zoneNew } = formConfirm;
     setFormConfirm({ ...formConfirm, lockerNoNew, channelNoNew: "" });
 
-    axios.get(`/api/locker-used/${zoneNew}/${lockerNoNew}`).then(({ data }) => {
-      setChannelEmpty(
-        data
-          ?.filter(({ status }) => status !== "full")
-          ?.map(({ channelNo }) => channelNo)
-      );
-    });
+    axios
+      .get(`http://localhost:8090/api/locker-used/${zoneNew}/${lockerNoNew}`)
+      .then(({ data }) => {
+        setChannelEmpty(
+          data
+            ?.filter(({ status }) => status !== "full")
+            ?.map(({ channelNo }) => channelNo)
+        );
+      });
   };
 
   const handleSubmit = (e) => {
@@ -114,7 +134,7 @@ export default function ConfirmMove() {
       if (result.isConfirmed) {
         console.log(formConfirm);
         axios
-          .post("/api/request-confirm", {
+          .post("http://localhost:8090/api/request-confirm", {
             ...formConfirm,
           })
           .then(({ data }) => {
@@ -252,6 +272,11 @@ export default function ConfirmMove() {
                         lockerNoNew: "",
                         channelNoNew: "",
                       });
+                      getLockerEmpty(
+                        zoneNew,
+                        formConfirm.position,
+                        formConfirm.gender
+                      );
                     }}
                   >
                     <option value="">เลือกโซน</option>

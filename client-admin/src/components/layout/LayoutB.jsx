@@ -37,10 +37,12 @@ export default function LayoutB() {
               </div>
             </Col>
           ))}
-        {Array(2)
+
+        {/* Disable */}
+        {Array(5)
           .fill(0)
           .map((_, i) => (
-            <Col xs={3} className="m-2 px-4 opacity-25" key={i}>
+            <Col xs={3} className="m-2 px-4 " key={i}>
               <div className="ps-2">
                 <LockerUsed
                   zone="B"

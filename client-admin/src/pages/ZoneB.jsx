@@ -34,7 +34,7 @@ export default function ZoneB() {
             <Col xs={9} className="py-2 ps-0">
               <Card body className="shadow-sm h-100 b-height">
                 <LayoutB />
-                <Indicator locker="67" all="90" />
+                <Indicator locker="67" all="120" />
               </Card>
             </Col>
           </Row>

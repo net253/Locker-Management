@@ -32,7 +32,7 @@ export default function ZoneA() {
             <Col xs={9} className="py-2 ps-0 ">
               <Card body className="shadow-sm h-100 b-height">
                 <LayoutA />
-                <Indicator locker="67" all="80" />
+                <Indicator locker="67" all="120" />
               </Card>
             </Col>
           </Row>

@@ -22,27 +22,29 @@ export default function Login() {
 
   const handleSignIn = (e) => {
     e.preventDefault();
-    axios.post("/auth/checklogin", { ...formSignIn }).then(({ data }) => {
-      if (data.state) {
-        const { name, isLoggedIn } = data;
-        dispatch(updateAuth({ name, isLoggedIn }));
-        Swal.fire({
-          icon: "success",
-          title: "Login Success.",
-          showConfirmButton: false,
-          timer: 1500,
-        }).then(() => {
-          history.push("/admin/zoneA");
-        });
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Login Fail.",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    });
+    axios
+      .post("http://localhost:8090/auth/checklogin", { ...formSignIn })
+      .then(({ data }) => {
+        if (data.state) {
+          const { name, isLoggedIn } = data;
+          dispatch(updateAuth({ name, isLoggedIn }));
+          Swal.fire({
+            icon: "success",
+            title: "Login Success.",
+            showConfirmButton: false,
+            timer: 1500,
+          }).then(() => {
+            history.push("/admin/zoneA");
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Login Fail.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
   };
 
   return (

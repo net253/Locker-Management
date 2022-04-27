@@ -33,24 +33,28 @@ export default function TableReport() {
     }).then((result) => {
       if (result.isConfirmed) {
         // console.log(info);
-        axios.post("/api/check-out", { ...info }).then(({ data }) => {
-          Swal.fire({
-            title: data.state ? "ดำเนินการเสร็จสิ้น" : "ดำเนินการล้มเหลว",
-            icon: data.state ? "success" : "error",
-            showConfirmButton: false,
-            timer: 2000,
-          }).then(() => {
-            getPresentData();
+        axios
+          .post("http://localhost:8090/api/check-out", { ...info })
+          .then(({ data }) => {
+            Swal.fire({
+              title: data.state ? "ดำเนินการเสร็จสิ้น" : "ดำเนินการล้มเหลว",
+              icon: data.state ? "success" : "error",
+              showConfirmButton: false,
+              timer: 2000,
+            }).then(() => {
+              getPresentData();
+            });
           });
-        });
       }
     });
   };
 
   const getPresentData = (zone = "", lockerNo = "") => {
-    axios.post("/api/present", { zone, lockerNo }).then(({ data }) => {
-      dispatch(updatePresentUsed(data));
-    });
+    axios
+      .post("http://localhost:8090/api/present", { zone, lockerNo })
+      .then(({ data }) => {
+        dispatch(updatePresentUsed(data));
+      });
   };
 
   const handleEdit = (e) => {
@@ -69,7 +73,7 @@ export default function TableReport() {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .post("/api/edit", {
+          .post("http://localhost:8090/api/edit", {
             newCode,
             oldCode,
             ...empInfo,

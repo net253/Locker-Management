@@ -59,11 +59,13 @@ export default function Locker() {
   };
 
   const updateLockerInfo = () => {
-    axios.get(`/api/locker-used/${zone}/${lockerNo}`).then(({ data }) => {
-      if (data.length > 0) {
-        dispatch(updateLocker(data));
-      }
-    });
+    axios
+      .get(`http://localhost:8090/api/locker-used/${zone}/${lockerNo}`)
+      .then(({ data }) => {
+        if (data.length > 0) {
+          dispatch(updateLocker(data));
+        }
+      });
   };
 
   const handleCheckIn = (info) => {
@@ -85,14 +87,35 @@ export default function Locker() {
           cancelButtonText: "ยกเลิก",
         }).then((result) => {
           if (result.isConfirmed) {
-            axios.post("/api/check-out", { ...info }).then(({ data }) => {
-              // console.log(data);
-              Swal.fire({
-                icon: data.state ? "success" : "error",
-                title: data.state ? "Check out สำเร็จ" : "Check out ไม่สำเร็จ",
-                showConfirmButton: false,
-                timer: 1500,
-              }).then(() => updateLockerInfo());
+            Swal.fire({
+              title: "หลังจาก Check out ข้อมูลจะหายไป ยืนยันคำขอ?",
+              html: `
+            <h3>${info.zone} ${info.lockerNo} ${info.channelNo}</h3>
+            <p>รหัสพนักงาน: ${info.code}</p>
+            <p>ชื่อ-สกุล: ${info.name}</p>
+            `,
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#02b511",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "ยืนยัน",
+              cancelButtonText: "ยกเลิก",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                axios
+                  .post("http://localhost:8090/api/check-out", { ...info })
+                  .then(({ data }) => {
+                    // console.log(data);
+                    Swal.fire({
+                      icon: data.state ? "success" : "error",
+                      title: data.state
+                        ? "Check out สำเร็จ"
+                        : "Check out ไม่สำเร็จ",
+                      showConfirmButton: false,
+                      timer: 1500,
+                    }).then(() => updateLockerInfo());
+                  });
+              }
             });
           }
         });
@@ -117,21 +140,23 @@ export default function Locker() {
             // console.log(result.value);
             const search = result.value;
             const action = "checkin";
-            axios.post(`/api/search`, { search, action }).then(({ data }) => {
-              if (data.length === 0) {
-                Swal.fire({
-                  icon: "error",
-                  html: `<h2>ไม่พบข้อมูลพนักงาน</h2>
+            axios
+              .post(`http://localhost:8090/api/search`, { search, action })
+              .then(({ data }) => {
+                if (data.length === 0) {
+                  Swal.fire({
+                    icon: "error",
+                    html: `<h2>ไม่พบข้อมูลพนักงาน</h2>
                   <h2>หรือ</h2>
                   <h2>พนักงานทั้งหมด Check in แล้ว</h2>`,
-                  confirmButtonText: "ตกลง",
-                });
-              } else {
-                // console.log(data);
-                setListName(data);
-                handleShowModal();
-              }
-            });
+                    confirmButtonText: "ตกลง",
+                  });
+                } else {
+                  // console.log(data);
+                  setListName(data);
+                  handleShowModal();
+                }
+              });
           }
         });
       }
@@ -161,7 +186,7 @@ export default function Locker() {
       if (result.isConfirmed) {
         // console.log({ ...chInfo, code: info.code });
         axios
-          .post("/api/check-in", {
+          .post("http://localhost:8090/api/check-in", {
             ...chInfo,
             code: info.code,
           })

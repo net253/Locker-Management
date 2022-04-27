@@ -34,7 +34,7 @@ export default function ZoneD() {
             <Col xs={9} className="py-2 ps-0">
               <Card body className="shadow-sm h-100 b-height">
                 <LayoutD />
-                <Indicator locker="30" all="80" />
+                <Indicator locker="30" all="120" />
               </Card>
             </Col>
           </Row>

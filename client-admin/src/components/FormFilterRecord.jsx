@@ -32,7 +32,7 @@ export default function FormFilterReport() {
     setFormFilter(initialFormFileter);
 
     axios
-      .post("/api/history", {
+      .post("http://localhost:8090/api/history", {
         zone: "A",
       })
       .then(({ data }) => {
@@ -81,10 +81,10 @@ export default function FormFilterReport() {
     endDate = fdatetime(endDate).getFDate;
     const action = formFilter.action?.value || "";
 
-    // console.log(zone, lockerNo, channelNo, startDate, endDate, action);
+    console.log(zone, lockerNo, channelNo, startDate, endDate, action);
 
     axios
-      .post("/api/history", {
+      .post("http://localhost:8090/api/history", {
         zone,
         lockerNo,
         channelNo,

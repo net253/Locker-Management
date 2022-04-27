@@ -29,24 +29,26 @@ export default function LayoutA() {
                 >
                   {`${fGroupNo(i + 1)}`}
                 </div>
-                <div className={`${5 + i * 8 < 67 ? "" : "opacity-25"}`}>
+                {/* <div className={`${5 + i * 8 < 67 ? "" : "opacity-25"}`}> */}
+                <div>
                   <LockerUsed
                     zone="A"
                     num={5 + i * 8}
                     qty={4}
                     height={35}
                     used={5 + i * 8 < 67 ? true : false}
+                    // used={true}
                   />
                 </div>
               </div>
             </Col>
           ))}
 
-        {/* Group 10 */}
-        {Array(1)
+        {/* Disable */}
+        {Array(6)
           .fill(0)
           .map((_, i) => (
-            <Col xs={2} className="m-2 opacity-25" key={i}>
+            <Col xs={2} className="m-2" key={i}>
               <div className="ps-2">
                 <LockerUsed
                   zone="A"

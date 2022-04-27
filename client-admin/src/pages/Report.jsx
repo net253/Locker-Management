@@ -25,9 +25,11 @@ export default function Report() {
   };
 
   const getPresentData = (zone = "", lockerNo = "") => {
-    axios.post("/api/present", { zone, lockerNo }).then(({ data }) => {
-      dispatch(updatePresentUsed(data));
-    });
+    axios
+      .post("http://localhost:8090/api/present", { zone, lockerNo })
+      .then(({ data }) => {
+        dispatch(updatePresentUsed(data));
+      });
   };
 
   useEffect(() => {

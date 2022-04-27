@@ -18,15 +18,17 @@ export default function LockerUsed({ zone, num, qty, height, used }) {
 
   const handleRoute = (i) => {
     const lockerNo = fLockerNo(num + i);
-    axios.get(`/api/locker-used/${zone}/${lockerNo}`).then(({ data }) => {
-      if (data.length > 0) {
-        dispatch(updateLocker(data));
-        history.push({
-          pathname: "/admin/locker",
-          state: { zone, lockerNo },
-        });
-      }
-    });
+    axios
+      .get(`http://localhost:8090/api/locker-used/${zone}/${lockerNo}`)
+      .then(({ data }) => {
+        if (data.length > 0) {
+          dispatch(updateLocker(data));
+          history.push({
+            pathname: "/admin/locker",
+            state: { zone, lockerNo },
+          });
+        }
+      });
   };
 
   const notUseLocker = () => {
@@ -56,6 +58,7 @@ export default function LockerUsed({ zone, num, qty, height, used }) {
   };
 
   const lockerInUsed = (zone, num, i, used) => {
+    // used ? handleRoute(i) : notUseLocker();
     if (zone === "A" || zone === "B") {
       if (num + i <= 67) {
         handleRoute(i);

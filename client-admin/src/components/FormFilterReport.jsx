@@ -38,10 +38,12 @@ export default function FormFilterReport() {
   );
 
   const getPresentData = (zone = "", lockerNo = "") => {
-    axios.post("/api/present", { zone, lockerNo }).then(({ data }) => {
-      // console.log(data);
-      dispatch(updatePresentUsed(data));
-    });
+    axios
+      .post("http://localhost:8090/api/present", { zone, lockerNo })
+      .then(({ data }) => {
+        // console.log(data);
+        dispatch(updatePresentUsed(data));
+      });
   };
 
   const handleSearch = (e) => {
